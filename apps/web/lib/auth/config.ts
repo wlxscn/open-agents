@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nanoid } from "nanoid";
 import { db } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema";
+import { resolveOAuthUsername } from "./username";
 
 function normalizeHost(value?: string): string | null {
   if (!value) {
@@ -109,11 +110,24 @@ export const auth = betterAuth({
     },
   },
 
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => ({
+          data: {
+            ...user,
+            username: resolveOAuthUsername(user, user.id ?? "user"),
+          },
+        }),
+      },
+    },
+  },
+
   socialProviders: {
     vercel: {
       clientId: process.env.NEXT_PUBLIC_VERCEL_APP_CLIENT_ID ?? "",
       clientSecret: process.env.VERCEL_APP_CLIENT_SECRET ?? "",
-      scope: ["openid", "email", "profile", "offline_access"],
+      scope: ["openid", "email", "profile"],
       overrideUserInfoOnSignIn: true,
     },
     github: {

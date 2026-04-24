@@ -13,11 +13,11 @@ Before giving deployment advice, read these files if you have not already:
 
 - `README.md`
 - `apps/web/.env.example`
+- `apps/web/app/api/auth/[...all]/route.ts`
 - `apps/web/lib/db/client.ts`
 - `apps/web/lib/jwe/encrypt.ts`
 - `apps/web/lib/crypto.ts`
-- `apps/web/app/api/auth/signin/vercel/route.ts`
-- `apps/web/app/api/auth/vercel/callback/route.ts`
+- `apps/web/lib/auth/config.ts`
 - `apps/web/app/api/github/app/install/route.ts`
 - `apps/web/app/api/github/app/callback/route.ts`
 - `apps/web/lib/github/app-auth.ts`
@@ -65,7 +65,7 @@ Use this checklist when guiding the user.
 ### Required for the app to run
 
 - `POSTGRES_URL`
-- `JWE_SECRET`
+- `BETTER_AUTH_SECRET`
 
 ### Required for a usable hosted deployment
 
@@ -95,7 +95,7 @@ Use this checklist when guiding the user.
 ### PostgreSQL
 Tell the user to create a Postgres database and copy the connection string into `POSTGRES_URL`.
 
-### JWE secret
+### Better Auth secret
 Explain that this is required for session encryption.
 
 Recommended generation command:
@@ -116,8 +116,8 @@ openssl rand -hex 32
 ### Vercel OAuth app
 Tell the user to create a Vercel OAuth app and set:
 
-- Callback URL: `https://YOUR_DOMAIN/api/auth/vercel/callback`
-- For local dev: `http://localhost:3000/api/auth/vercel/callback`
+- Callback URL: `https://YOUR_DOMAIN/api/auth/callback/vercel`
+- For local dev: `http://localhost:3000/api/auth/callback/vercel`
 
 Store the credentials as:
 
@@ -164,7 +164,7 @@ Guide the user through this sequence:
 2. Import it into Vercel at the repo root.
 3. Add the baseline env vars:
    - `POSTGRES_URL`
-   - `JWE_SECRET`
+   - `BETTER_AUTH_SECRET`
    - `ENCRYPTION_KEY`
 4. Deploy once to get a stable production URL.
 5. Create the Vercel OAuth app using that production URL.

@@ -521,6 +521,7 @@ ${hostLine}${portLines}${runtimeEnvLine}`;
 
     // Calculate SDK timeout with buffer for beforeStop hook.
     const sdkTimeout = effectiveTimeout + TIMEOUT_BUFFER_MS;
+    console.log('sdkTimeout:', sdkTimeout);
 
     const createBaseConfig = {
       ...(name ? { name } : {}),

@@ -1,6 +1,6 @@
 # Open Agents
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?project-name=open-agents&repository-name=open-agents&repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fopen-agents&demo-title=Open+Agents&demo-description=Open-source+reference+app+for+building+and+running+background+coding+agents+on+Vercel.&demo-url=https%3A%2F%2Fopen-agents.dev%2F&env=POSTGRES_URL%2CJWE_SECRET%2CENCRYPTION_KEY%2CNEXT_PUBLIC_VERCEL_APP_CLIENT_ID%2CVERCEL_APP_CLIENT_SECRET%2CNEXT_PUBLIC_GITHUB_CLIENT_ID%2CGITHUB_CLIENT_SECRET%2CGITHUB_APP_ID%2CGITHUB_APP_PRIVATE_KEY%2CNEXT_PUBLIC_GITHUB_APP_SLUG%2CGITHUB_WEBHOOK_SECRET&envDescription=Neon+can+provide+POSTGRES_URL+automatically.+Generate+JWE_SECRET+and+ENCRYPTION_KEY+yourself%2C+then+add+your+Vercel+OAuth+and+GitHub+App+credentials+for+a+full+deployment.&products=%255B%257B%2522type%2522%253A%2522integration%2522%252C%2522protocol%2522%253A%2522storage%2522%252C%2522productSlug%2522%253A%2522neon%2522%252C%2522integrationSlug%2522%253A%2522neon%2522%257D%252C%257B%2522type%2522%253A%2522integration%2522%252C%2522protocol%2522%253A%2522storage%2522%252C%2522productSlug%2522%253A%2522upstash-kv%2522%252C%2522integrationSlug%2522%253A%2522upstash%2522%257D%255D&skippable-integrations=1)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?project-name=open-agents&repository-name=open-agents&repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fopen-agents&demo-title=Open+Agents&demo-description=Open-source+reference+app+for+building+and+running+background+coding+agents+on+Vercel.&demo-url=https%3A%2F%2Fopen-agents.dev%2F&env=POSTGRES_URL%2CBETTER_AUTH_SECRET%2CENCRYPTION_KEY%2CNEXT_PUBLIC_VERCEL_APP_CLIENT_ID%2CVERCEL_APP_CLIENT_SECRET%2CNEXT_PUBLIC_GITHUB_CLIENT_ID%2CGITHUB_CLIENT_SECRET%2CGITHUB_APP_ID%2CGITHUB_APP_PRIVATE_KEY%2CNEXT_PUBLIC_GITHUB_APP_SLUG%2CGITHUB_WEBHOOK_SECRET&envDescription=Neon+can+provide+POSTGRES_URL+automatically.+Generate+BETTER_AUTH_SECRET+and+ENCRYPTION_KEY+yourself%2C+then+add+your+Vercel+OAuth+and+GitHub+App+credentials+for+a+full+deployment.&products=%255B%257B%2522type%2522%253A%2522integration%2522%252C%2522protocol%2522%253A%2522storage%2522%252C%2522productSlug%2522%253A%2522neon%2522%252C%2522integrationSlug%2522%253A%2522neon%2522%257D%252C%257B%2522type%2522%253A%2522integration%2522%252C%2522protocol%2522%253A%2522storage%2522%252C%2522productSlug%2522%253A%2522upstash-kv%2522%252C%2522integrationSlug%2522%253A%2522upstash%2522%257D%255D&skippable-integrations=1)
 
 Open Agents is an open-source reference app for building and running background coding agents on Vercel. It includes the web UI, the agent runtime, sandbox orchestration, and the GitHub integration needed to go from prompt to code changes without keeping your laptop involved.
 
@@ -59,7 +59,7 @@ These are the hard requirements for the app to boot and load server state:
 
 ```env
 POSTGRES_URL=
-JWE_SECRET=
+BETTER_AUTH_SECRET=
 ```
 
 ### Required to sign in and actually use the hosted app
@@ -112,7 +112,7 @@ Recommended path: deploy this repo at the repo root on Vercel, then layer on aut
 3. Generate these secrets:
 
    ```bash
-   openssl rand -base64 32 | tr '+/' '-_' | tr -d '=\n'   # JWE_SECRET
+   openssl rand -base64 32 | tr '+/' '-_' | tr -d '=\n'   # BETTER_AUTH_SECRET
    openssl rand -hex 32                                    # ENCRYPTION_KEY
    ```
 
@@ -121,7 +121,7 @@ Recommended path: deploy this repo at the repo root on Vercel, then layer on aut
 
    ```env
    POSTGRES_URL=
-   JWE_SECRET=
+   BETTER_AUTH_SECRET=
    ENCRYPTION_KEY=
    ```
 
@@ -129,7 +129,7 @@ Recommended path: deploy this repo at the repo root on Vercel, then layer on aut
 7. Create a Vercel OAuth app with callback URL:
 
    ```text
-   https://YOUR_DOMAIN/api/auth/vercel/callback
+   https://YOUR_DOMAIN/api/auth/callback/vercel
    ```
 
 8. Add these env vars and redeploy:
@@ -183,13 +183,13 @@ If you already have a linked Vercel project, you can still pull env vars locally
 Create a Vercel OAuth app and use this callback:
 
 ```text
-https://YOUR_DOMAIN/api/auth/vercel/callback
+https://YOUR_DOMAIN/api/auth/callback/vercel
 ```
 
 For local development, use:
 
 ```text
-http://localhost:3000/api/auth/vercel/callback
+http://localhost:3000/api/auth/callback/vercel
 ```
 
 Then set:
